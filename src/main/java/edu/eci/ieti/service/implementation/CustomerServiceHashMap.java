@@ -12,7 +12,7 @@ import edu.eci.ieti.service.CustomerService;
 @Service
 public class CustomerServiceHashMap implements CustomerService {
 
-    private HashMap<String, Customer> persistence;
+    private HashMap<String, Customer> persistence = new HashMap<>();
 
     @Override
     public Customer create(Customer customer) {

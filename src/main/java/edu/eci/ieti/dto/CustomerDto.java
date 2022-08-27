@@ -1,5 +1,7 @@
 package edu.eci.ieti.dto;
 
+import edu.eci.ieti.entity.Customer;
+
 public class CustomerDto {
 
     private String id;
@@ -57,6 +59,10 @@ public class CustomerDto {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Customer toCustomer() {
+        return new Customer(id, name, email, lastname, createdAt);
     }
 
 }

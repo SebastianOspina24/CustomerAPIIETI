@@ -4,7 +4,7 @@ import java.util.List;
 import edu.eci.ieti.entity.Customer;
 
 public interface CustomerService {
-    Customer create(Customer customer);
+    Customer create(Customer user);
 
     Customer findById(String id);
 
@@ -12,5 +12,5 @@ public interface CustomerService {
 
     void deleteById(String id);
 
-    Customer update(Customer customer, String userId);
+    Customer update(Customer user, String userId);
 }

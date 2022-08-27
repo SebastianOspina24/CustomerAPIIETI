@@ -1,5 +1,6 @@
 package edu.eci.ieti.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,31 +19,31 @@ public class CustomerController {
 
     @GetMapping
     public ResponseEntity<List<CustomerDto>> getAll() {
-        // TODO implement this method using UserService
-        return null;
+        ArrayList<CustomerDto> customers = new ArrayList<>();
+        customerService.getAll().forEach((user) -> customers.add(user.toCustomerDTO()));
+        return ResponseEntity.ok(customers);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CustomerDto> findById(@PathVariable String id) {
-        // TODO implement this method using UserService
-        return null;
+        return ResponseEntity.ok(customerService.findById(id).toCustomerDTO());
     }
 
     @PostMapping
-    public ResponseEntity<CustomerDto> create(@RequestBody CustomerDto userDto) {
-        // TODO implement this method using UserService
-        return null;
+    public ResponseEntity<CustomerDto> create(@RequestBody CustomerDto customer) {
+        return ResponseEntity.ok(customerService.create(customer.toCustomer()).toCustomerDTO());
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<CustomerDto> update(@RequestBody CustomerDto customer, @PathVariable String id) {
-        // TODO implement this method using UserService
-        return null;
+        return ResponseEntity.ok(customerService.update(customer.toCustomer(), id).toCustomerDTO());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable String id) {
-        // TODO implement this method using UserService
-        return null;
+        boolean flag = customerService.findById(id) != null;
+        if (flag)
+            customerService.deleteById(id);
+        return ResponseEntity.ok(flag);
     }
 }
