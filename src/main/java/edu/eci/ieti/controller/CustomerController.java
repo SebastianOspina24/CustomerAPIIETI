@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import edu.eci.ieti.dto.CustomerDto;
+import edu.eci.ieti.entity.Customer;
 import edu.eci.ieti.service.CustomerService;
 
 @RestController
@@ -26,17 +27,25 @@ public class CustomerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CustomerDto> findById(@PathVariable String id) {
-        return ResponseEntity.ok(customerService.findById(id).toCustomerDTO());
+        Customer customer = customerService.findById(id);
+        return ResponseEntity
+                .ok((customer != null) ? customer.toCustomerDTO() : null);
     }
 
     @PostMapping
     public ResponseEntity<CustomerDto> create(@RequestBody CustomerDto customer) {
-        return ResponseEntity.ok(customerService.create(customer.toCustomer()).toCustomerDTO());
+        if (customer != null)
+            return ResponseEntity.ok(customerService.create(customer.toCustomer()).toCustomerDTO());
+        else
+            return ResponseEntity.badRequest().body(null);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<CustomerDto> update(@RequestBody CustomerDto customer, @PathVariable String id) {
-        return ResponseEntity.ok(customerService.update(customer.toCustomer(), id).toCustomerDTO());
+        if (customer != null)
+            return ResponseEntity.ok(customerService.update(customer.toCustomer(), id).toCustomerDTO());
+        else
+            return ResponseEntity.badRequest().body(null);
     }
 
     @DeleteMapping("/{id}")

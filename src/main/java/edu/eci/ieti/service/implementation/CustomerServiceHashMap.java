@@ -16,8 +16,9 @@ public class CustomerServiceHashMap implements CustomerService {
 
     @Override
     public Customer create(Customer customer) {
-        persistence.put(customer.getId(), customer);
-        return customer;
+        if (persistence.get(customer.getId()) == null)
+            persistence.put(customer.getId(), customer);
+        return persistence.get(customer.getId());
     }
 
     @Override
@@ -37,8 +38,10 @@ public class CustomerServiceHashMap implements CustomerService {
 
     @Override
     public Customer update(Customer customer, String userId) {
-        deleteById(userId);
-        return create(customer);
+        if (customer.getId() != userId)
+            persistence.remove(userId);
+        persistence.put(customer.getId(), customer);
+        return persistence.get(customer.getId());
     }
 
 }

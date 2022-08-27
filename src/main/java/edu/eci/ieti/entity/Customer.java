@@ -6,17 +6,17 @@ public class Customer {
     private String id;
     private String name;
     private String email;
-    private String lastname;
+    private String lastName;
     private String createdAt;
 
     public Customer() {
     }
 
-    public Customer(String id, String name, String email, String lastname, String createdAt) {
+    public Customer(String id, String name, String email, String lastName, String createdAt) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.lastname = lastname;
+        this.lastName = lastName;
         this.createdAt = createdAt;
     }
 
@@ -44,12 +44,12 @@ public class Customer {
         this.email = email;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getCreatedAt() {
@@ -61,7 +61,7 @@ public class Customer {
     }
 
     public CustomerDto toCustomerDTO() {
-        return new CustomerDto(id, name, email, lastname, createdAt);
+        return new CustomerDto(id, name, email, lastName, createdAt);
     }
 
 }
