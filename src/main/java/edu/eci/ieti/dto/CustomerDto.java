@@ -1,8 +1,6 @@
 package edu.eci.ieti.dto;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import edu.eci.ieti.entity.Customer;
 
 public class CustomerDto {
