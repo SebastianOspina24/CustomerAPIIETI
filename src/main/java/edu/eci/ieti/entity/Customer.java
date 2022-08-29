@@ -1,18 +1,28 @@
 package edu.eci.ieti.entity;
 
+import java.util.Date;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import edu.eci.ieti.dto.CustomerDto;
 
+@Document
 public class Customer {
+
+    @Id
     private String id;
     private String name;
+    @Indexed(unique = true)
     private String email;
     private String lastName;
-    private String createdAt;
+    private Date createdAt;
 
     public Customer() {
     }
 
-    public Customer(String id, String name, String email, String lastName, String createdAt) {
+    public Customer(String id, String name, String email, String lastName, Date createdAt) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -52,16 +62,16 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    public String getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
     public CustomerDto toCustomerDTO() {
-        return new CustomerDto(id, name, email, lastName, createdAt);
+        return new CustomerDto(id, name, email, lastName, createdAt.toString());
     }
 
 }

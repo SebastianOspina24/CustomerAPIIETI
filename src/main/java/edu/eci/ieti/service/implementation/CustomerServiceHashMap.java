@@ -4,15 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import edu.eci.ieti.entity.Customer;
 import edu.eci.ieti.service.CustomerService;
 
-@Service
 public class CustomerServiceHashMap implements CustomerService {
 
-    private HashMap<String, Customer> persistence = new HashMap<>();
+    private final HashMap<String, Customer> persistence = new HashMap<>();
 
     @Override
     public Customer create(Customer customer) {
@@ -32,14 +29,18 @@ public class CustomerServiceHashMap implements CustomerService {
     }
 
     @Override
-    public void deleteById(String id) {
-        persistence.remove(id);
+    public boolean deleteById(String id) {
+        boolean flag = persistence.get(id) != null;
+        if (flag)
+            persistence.remove(id);
+        flag = persistence.get(id) == null;
+        return flag;
     }
 
     @Override
-    public Customer update(Customer customer, String userId) {
-        if (customer.getId() != userId)
-            persistence.remove(userId);
+    public Customer update(Customer customer, String customerId) {
+        if (customer.getId() != customerId)
+            persistence.remove(customerId);
         persistence.put(customer.getId(), customer);
         return persistence.get(customer.getId());
     }

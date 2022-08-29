@@ -1,5 +1,8 @@
 package edu.eci.ieti.dto;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import edu.eci.ieti.entity.Customer;
 
 public class CustomerDto {
@@ -62,7 +65,12 @@ public class CustomerDto {
     }
 
     public Customer toCustomer() {
-        return new Customer(id, name, email, lastName, createdAt);
+        try {
+            return new Customer(id, name, email, lastName, new SimpleDateFormat("dd/MM/yyyy").parse(createdAt));
+        } catch (Exception e) {
+            return null;
+        }
+
     }
 
 }

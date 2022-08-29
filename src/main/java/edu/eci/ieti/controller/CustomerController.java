@@ -21,7 +21,7 @@ public class CustomerController {
     @GetMapping
     public ResponseEntity<List<CustomerDto>> getAll() {
         ArrayList<CustomerDto> customers = new ArrayList<>();
-        customerService.getAll().forEach((user) -> customers.add(user.toCustomerDTO()));
+        customerService.getAll().forEach((customer) -> customers.add(customer.toCustomerDTO()));
         return ResponseEntity.ok(customers);
     }
 
@@ -50,9 +50,6 @@ public class CustomerController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable String id) {
-        boolean flag = customerService.findById(id) != null;
-        if (flag)
-            customerService.deleteById(id);
-        return ResponseEntity.ok(flag);
+        return ResponseEntity.ok(customerService.deleteById(id));
     }
 }
