@@ -1,6 +1,8 @@
 package edu.eci.ieti.service;
 
 import java.util.List;
+import java.util.Optional;
+
 import edu.eci.ieti.entity.Customer;
 
 public interface CustomerService {
@@ -13,4 +15,6 @@ public interface CustomerService {
     boolean deleteById(String id);
 
     Customer update(Customer customer, String customerId);
+
+    Optional<Customer> findByEmail(String email);
 }

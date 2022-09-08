@@ -1,12 +1,15 @@
 package edu.eci.ieti.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import edu.eci.ieti.dto.CustomerDto;
+import edu.eci.ieti.util.RoleEnum;
 
 @Document
 public class Customer {
@@ -15,6 +18,8 @@ public class Customer {
     private String id;
     private String name;
     @Indexed(unique = true)
+    private String passwordHash;
+    private List<RoleEnum> roles;
     private String email;
     private String lastName;
     private Date createdAt;
@@ -22,9 +27,10 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String id, String name, String email, String lastName, Date createdAt) {
+    public Customer(String id, String name, String password, String email, String lastName, Date createdAt) {
         this.id = id;
         this.name = name;
+        passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
         this.email = email;
         this.lastName = lastName;
         this.createdAt = createdAt;
@@ -56,6 +62,22 @@ public class Customer {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+    public List<RoleEnum> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<RoleEnum> roles) {
+        this.roles = roles;
     }
 
     public void setLastName(String lastName) {

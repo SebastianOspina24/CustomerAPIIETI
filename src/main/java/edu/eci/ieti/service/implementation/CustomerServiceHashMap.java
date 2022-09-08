@@ -3,6 +3,7 @@ package edu.eci.ieti.service.implementation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import edu.eci.ieti.entity.Customer;
 import edu.eci.ieti.service.CustomerService;
@@ -43,6 +44,12 @@ public class CustomerServiceHashMap implements CustomerService {
             persistence.remove(customerId);
         persistence.put(customer.getId(), customer);
         return persistence.get(customer.getId());
+    }
+
+    @Override
+    public Optional<Customer> findByEmail(String email) {
+        // TODO Auto-generated method stub
+        return Optional.empty();
     }
 
 }

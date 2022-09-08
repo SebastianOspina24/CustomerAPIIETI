@@ -7,6 +7,7 @@ public class CustomerDto {
 
     private String id;
     private String name;
+    private String passwd;
     private String email;
     private String lastName;
     private String createdAt;
@@ -17,6 +18,15 @@ public class CustomerDto {
     public CustomerDto(String id, String name, String email, String lastName, String createdAt) {
         this.id = id;
         this.name = name;
+        this.email = email;
+        this.lastName = lastName;
+        this.createdAt = createdAt;
+    }
+
+    public CustomerDto(String id, String name, String passwd, String email, String lastName, String createdAt) {
+        this.id = id;
+        this.name = name;
+        this.passwd = passwd;
         this.email = email;
         this.lastName = lastName;
         this.createdAt = createdAt;
@@ -64,11 +74,19 @@ public class CustomerDto {
 
     public Customer toCustomer() {
         try {
-            return new Customer(id, name, email, lastName, new SimpleDateFormat("dd/MM/yyyy").parse(createdAt));
+            return new Customer(id, name, passwd, email, lastName, new SimpleDateFormat("dd/MM/yyyy").parse(createdAt));
         } catch (Exception e) {
             return null;
         }
 
+    }
+
+    public String getPasswd() {
+        return passwd;
+    }
+
+    public void setPasswd(String paswd) {
+        this.passwd = paswd;
     }
 
 }
