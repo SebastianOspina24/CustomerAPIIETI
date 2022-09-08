@@ -48,7 +48,6 @@ public class AuthController {
     }
 
     private String generateToken(Customer customer, Date expirationDate) {
-        System.out.println(secret);
         return Jwts.builder()
                 .setSubject(customer.getId())
                 .claim(CLAIMS_ROLES_KEY, customer.getRoles())
