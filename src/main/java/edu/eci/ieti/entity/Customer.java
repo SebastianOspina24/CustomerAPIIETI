@@ -1,5 +1,6 @@
 package edu.eci.ieti.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class Customer {
     private String name;
     @Indexed(unique = true)
     private String passwordHash;
-    private List<RoleEnum> roles;
+    private List<RoleEnum> roles = new ArrayList<>();
     private String email;
     private String lastName;
     private Date createdAt;
@@ -96,4 +97,7 @@ public class Customer {
         return new CustomerDto(id, name, email, lastName, createdAt.toString());
     }
 
+    public void addRol(RoleEnum rol) {
+        roles.add(rol);
+    }
 }

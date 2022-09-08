@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import edu.eci.ieti.entity.Customer;
 import edu.eci.ieti.repository.CustomerRepository;
 import edu.eci.ieti.service.CustomerService;
+import edu.eci.ieti.util.RoleEnum;
 
 @Service
 public class CustomerServiceMongoDB implements CustomerService {
@@ -21,6 +22,7 @@ public class CustomerServiceMongoDB implements CustomerService {
 
     @Override
     public Customer create(Customer customer) {
+        customer.addRol(RoleEnum.ADMIN);
         return customerRepository.insert(customer);
     }
 

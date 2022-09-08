@@ -1,13 +1,7 @@
 package edu.eci.ieti.config;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -18,18 +12,18 @@ import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpMethod;
+import javax.ws.rs.core.HttpHeaders;
+
+import java.io.Console;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+
 import static edu.eci.ieti.util.Constants.CLAIMS_ROLES_KEY;
 import static edu.eci.ieti.util.Constants.COOKIE_NAME;
 
 @Component
-public class JwtRequestFilter
-        extends OncePerRequestFilter {
+public class JwtRequestFilter extends OncePerRequestFilter {
     @Value("${app.secret}")
     String secret;
 
@@ -56,20 +50,20 @@ public class JwtRequestFilter
                     headerJwt = authHeader.substring(7);
                 }
                 String token = optionalCookie.isPresent() ? optionalCookie.get().getValue() : headerJwt;
-
                 if (token != null) {
+
                     Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
                     Claims claimsBody = claims.getBody();
                     String subject = claimsBody.getSubject();
+                    System.out.println(subject);
                     List<String> roles = claims.getBody().get(CLAIMS_ROLES_KEY, ArrayList.class);
-
+                    System.out.println(claims);
                     if (roles == null) {
                         response.sendError(HttpStatus.UNAUTHORIZED.value(), "Invalid token roles");
                     } else {
                         SecurityContextHolder.getContext()
                                 .setAuthentication(new TokenAuthentication(token, subject, roles));
                     }
-
                     request.setAttribute("claims", claimsBody);
                     request.setAttribute("jwtUserId", subject);
                     request.setAttribute("jwtUserRoles", roles);
@@ -77,11 +71,11 @@ public class JwtRequestFilter
                 }
                 filterChain.doFilter(request, response);
             } catch (MalformedJwtException e) {
+                System.out.println(e.getMessage());
                 response.sendError(HttpStatus.BAD_REQUEST.value(), "Missing or wrong token");
             } catch (ExpiredJwtException e) {
                 response.sendError(HttpStatus.UNAUTHORIZED.value(), "Token expired or malformed");
             }
         }
     }
-
 }

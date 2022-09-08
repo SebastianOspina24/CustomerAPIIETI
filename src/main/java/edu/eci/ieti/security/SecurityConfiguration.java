@@ -33,9 +33,9 @@ public class SecurityConfiguration
                 .disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/v2/auth")
+                .permitAll().antMatchers(HttpMethod.POST, "/api/v2/customers")
                 .permitAll()
-                .anyRequest()
-                .authenticated()
+                .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
