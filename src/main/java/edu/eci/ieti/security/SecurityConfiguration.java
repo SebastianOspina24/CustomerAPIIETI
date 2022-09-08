@@ -32,7 +32,7 @@ public class SecurityConfiguration
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/v1/auth")
+                .antMatchers(HttpMethod.POST, "/v2/auth")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
