@@ -11,6 +11,7 @@ import edu.eci.ieti.entity.Customer;
 import edu.eci.ieti.service.CustomerService;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/v2/customers")
 public class CustomerController {
 

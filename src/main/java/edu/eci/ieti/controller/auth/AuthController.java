@@ -6,6 +6,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ import static edu.eci.ieti.util.Constants.CLAIMS_ROLES_KEY;
 import static edu.eci.ieti.util.Constants.TOKEN_DURATION_MINUTES;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("v2/auth")
 public class AuthController {
 
@@ -38,7 +40,7 @@ public class AuthController {
 
     @PostMapping
     public TokenDto login(@RequestBody LoginDto loginDto) {
-
+        System.out.println(loginDto.getEmail());
         Optional<Customer> customer = customerService.findByEmail(loginDto.getEmail());
         if (customer.isPresent() && BCrypt.checkpw(loginDto.getPassword(), customer.get().getPasswordHash())) {
             return generateTokenDto(customer.get());
